@@ -1,8 +1,8 @@
 from SublimeLinter.lint import Linter, util
 from os.path import dirname, join
 
-ERL_LINT = join(dirname(__file__), "erl_lint.erl")
-
+ERL_LINT = join(dirname(__file__), "erl_lint.erl").replace(" ", "\ ")
+print(ERL_LINT)
 
 class ErlLint(Linter):
     """Provides an interface to erlint."""
