@@ -39,14 +39,22 @@ class ErlLint(Linter):
             return command
         lib_folder = path.join(root_dir, self.lib_folder)
 
+        include_dirs = []
         ebin_dirs = []
         for lib in os.listdir(lib_folder):
-            p = path.join(lib_folder, lib, 'ebin')
-            if path.isdir(p):
-                ebin_dirs.append(p)
+            ebin_dir = path.join(lib_folder, lib, 'ebin')
+            include_dir = path.join(lib_folder, lib, 'include')
+            if path.isdir(ebin_dir):
+                ebin_dirs.append(ebin_dir)
+            if path.isdir(include_dir):
+                include_dirs.append(include_dir)
 
         for ebin_dir in ebin_dirs:
             command.extend(["-pa", ebin_dir])
+
+        for include_dir in include_dirs:
+            command.extend(["-I", include_dir])
+
         return command
 
     def find_build_folder_dir(self, directory, tries=5):
